@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Location Map</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <style>
+            #map {
+                height: 600px;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Location Map for {{ address }}</h1>
+        <div id="map"></div>
+
+        <script>
+            // Properly embed and convert Django template variables
+            var lat = parseFloat('{{ lat }}');
+            var lng = parseFloat('{{ lng }}');
+
+            if (isNaN(lat) || isNaN(lng)) {
+                console.error('Invalid latitude or longitude values.');
+            } else {
+                // Initialize the map
+                var map = L.map('map').setView([lat, lng], 13);
+
+                // Add a tile layer to the map
+                L.tileLayer('https://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
+                    attribution: 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+                }).addTo(map);
+
+                // Add a marker at the specified location
+                L.marker([lat, lng]).addTo(map).bindPopup('<b>{{ address }}</b><br>Location.').openPopup();
+            }
+        </script>
+    </body>
+</html>

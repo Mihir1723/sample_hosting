@@ -1,0 +1,21 @@
+<!-- phone_verification.html -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Phone Number Verification</title>
+    </head>
+    <body>
+        <h2>Phone Number Verification</h2>
+        <form method="post" action="{% url 'phone_number_verification' %}">
+            {% csrf_token %}
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required />
+            <button type="submit">Verify</button>
+        </form>
+        {% if error %}
+        <div>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+    </body>
+</html>
